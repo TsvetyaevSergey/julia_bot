@@ -20,7 +20,11 @@ async def select_uhod(message: Message, state: FSMContext):
 @router.message(User_Status.choosing_opt, F.text.lower() == "брак по товару")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="БЛЯ КАКОЙ ЖЕ ЕБЕЙШИЙ ТЕКСТ ПРО БРАК ДЛЯ ОПТА Я НЕ МОГУ",
+        text="Очень жаль, что что-то пошло не так 😞\n"
+        "Не спешите оставлять плохой отзыв, мы очень дорожим нашими клиентами и нашим рейтингом! \n"
+        "Опишите Вашу ситуацию консультанту по ссылке ниже 👇 мы обязательно поможем решить Ваш вопрос! \n"
+        "✅ не забудьте приложить фотографии/видео\n"
+        "@softsleep_online",
         reply_markup=get_restart_menu()
     )
     await state.clear()
@@ -29,7 +33,9 @@ async def select_uhod(message: Message, state: FSMContext):
 @router.message(User_Status.choosing_opt, F.text.lower() == "переход на сайт")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="БЛЯ КАКОЙ ЖЕ ЕБЕЙШИЙ ТЕКСТ ПРО САЙТ ДЛЯ ОПТА Я НЕ МОГУ",
+        text="Для того, чтобы подробнее ознакомиться с нашим ассортиментом переходите по ссылке 😇 \n"
+        "Желаем отличных покупок! \n"
+        "https://www.softdream.ru/?ysclid=lpb5q2rc5e789037866\n",
         reply_markup=get_restart_menu()
     )
     await state.clear()

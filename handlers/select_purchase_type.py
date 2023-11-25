@@ -7,12 +7,18 @@ from keyboards.for_retail import select_retail_option
 from keyboards.start_menu import get_start_menu
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
+from utils.database import add_user
 
 router = Router()  # [1]
 
 
 @router.message(Command("start"))  # [2]
-async def cmd_start(message: Message,state: FSMContext):
+async def cmd_start(message: Message, state: FSMContext):
+    user = message.from_user
+    print(user.dict())
+    msg = await message.answer("Запускаем нашего бота для Вас...")
+    add_user(user)
+    await msg.delete()
     await message.answer(
         "Привет!\nНа связи команда «Мягкий сон»! Мы сделали этого бота, что бы Вы смогли решать все Ваши вопросы 24/7.\n"
         "Это очень удобно👏\n"
@@ -20,6 +26,7 @@ async def cmd_start(message: Message,state: FSMContext):
         "Готовы начать?",
         reply_markup=get_start_menu()
     )
+    await message.delete()
 
 
 @router.message(StateFilter(None), F.text.in_(["Начать", "Вернуться в меню"]))

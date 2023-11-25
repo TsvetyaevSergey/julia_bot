@@ -7,5 +7,5 @@ def select_opt_option() -> ReplyKeyboardMarkup:
     kb.button(text="Уход")
     kb.button(text="Брак по товару")
     kb.button(text="Переход на сайт")
-    kb.adjust(3)
+    kb.adjust(2)
     return kb.as_markup(resize_keyboard=True)

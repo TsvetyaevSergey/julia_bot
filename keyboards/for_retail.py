@@ -8,5 +8,6 @@ def select_retail_option() -> ReplyKeyboardMarkup:
     kb.button(text="Брак по товару")
     kb.button(text="Ассортимент")
     kb.button(text="Акции/Скидки")
-    kb.adjust(4)
+    kb.button(text="Переход на сайт")
+    kb.adjust(2)
     return kb.as_markup(resize_keyboard=True)
