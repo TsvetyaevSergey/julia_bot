@@ -42,7 +42,7 @@ async def start_select(message: Message, state: FSMContext):
 @router.message(User_Status.start, F.text.lower() == "опт")
 async def answer_opt(message: Message, state: FSMContext):
     await message.answer(
-        "ТУТ БУДЕТ ЕБЕЙШИЙ ТЕКСТ ПРО ОПТ",
+        "НЕ ГОТОВЫЙ ТЕКСТ ПРО ОПТ",
         reply_markup=select_opt_option()
     )
     await state.set_state(User_Status.choosing_opt)
@@ -51,7 +51,7 @@ async def answer_opt(message: Message, state: FSMContext):
 @router.message(User_Status.start, F.text.lower() == "розница")
 async def answer_retail(message: Message, state: FSMContext):
     await message.answer(
-        "ТУТ БУДЕТ ЕБЕЙШИЙ ТЕКСТ ПРО РОЗНИЦУs",
+        "НЕ ГОТОВЫЙ ТЕКСТ ПРО РОЗНИЦУ",
         reply_markup=select_retail_option()
     )
     await state.set_state(User_Status.choosing_retail)

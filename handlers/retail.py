@@ -11,7 +11,7 @@ router = Router()  # [1]
 @router.message(User_Status.choosing_retail, F.text.lower() == "уход")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="БЛЯ КАКОЙ ЖЕ ЕБЕЙШИЙ ТЕКСТ ПРО УХОД ДЛЯ РОЗНИЦЫ Я НЕ МОГУ",
+        text="Не готовый текст про УХОД РОЗНИЦА",
         reply_markup=get_restart_menu()
     )
     await state.clear()
@@ -33,7 +33,7 @@ async def select_uhod(message: Message, state: FSMContext):
 @router.message(User_Status.choosing_retail, F.text.lower() == "ассортимент")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="БЛЯ КАКОЙ ЖЕ ЕБЕЙШИЙ ТЕКСТ ПРО АССОРТИМЕНТ ДЛЯ РОЗНИЦЫ Я НЕ МОГУ",
+        text="Не готовый текст про АССОРТИМЕНТ РОЗНИЦА",
         reply_markup=get_restart_menu()
     )
     await state.clear()
