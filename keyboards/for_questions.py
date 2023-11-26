@@ -5,5 +5,6 @@ def get_retail_or_wholesale() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardBuilder()
     kb.button(text="ОПТ")
     kb.button(text="Розница")
+    kb.button(text="Назад")
     kb.adjust(2)
     return kb.as_markup(resize_keyboard=True)

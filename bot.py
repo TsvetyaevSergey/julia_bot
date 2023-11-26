@@ -3,7 +3,7 @@ import logging
 
 import pygsheets
 from aiogram import Bot, Dispatcher
-from handlers import select_purchase_type, opt, retail
+from handlers import select_purchase_type, opt, retail,care
 
 logging.basicConfig(level=logging.INFO)
 
@@ -16,7 +16,7 @@ wks = sh.sheet1
 async def main():
     bot = Bot(token="6875914308:AAFu8F9-HIB49cWB1sBQ1d-SR9sFLmYh6Mg")
     dp = Dispatcher()
-    dp.include_routers(select_purchase_type.router, opt.router, retail.router)
+    dp.include_routers(select_purchase_type.router, opt.router, retail.router,care.router)
 
     # Альтернативный вариант регистрации роутеров по одному на строку
     # dp.include_router(questions.router)

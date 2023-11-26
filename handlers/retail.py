@@ -1,9 +1,10 @@
 from aiogram import Router, F
 from aiogram.types import Message, ReplyKeyboardRemove
-from handlers.status import User_Status
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from keyboards.restart_menu import get_restart_menu
+from keyboards.for_care import select_care
+from handlers.status import User_Status
 
 router = Router()  # [1]
 
@@ -11,19 +12,19 @@ router = Router()  # [1]
 @router.message(User_Status.choosing_retail, F.text.lower() == "уход")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="Не готовый текст про УХОД РОЗНИЦА",
-        reply_markup=get_restart_menu()
+        text="Уход за какой продукцией Вас интересует ? ",
+        reply_markup=select_care()
     )
-    await state.clear()
+    await state.set_state(User_Status.choosing_care)
 
 
 @router.message(User_Status.choosing_retail, F.text.lower() == "брак по товару")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="Очень жаль, что что-то пошло не так 😞\n"
-        "Не спешите оставлять плохой отзыв, мы очень дорожим нашими клиентами и нашим рейтингом! \n"
-        "Опишите Вашу ситуацию консультанту по ссылке ниже 👇 мы обязательно поможем решить Ваш вопрос! \n"
-        "✅ не забудьте приложить фотографии/видео\n"
+        text="Очень жаль, что что-то пошло не так 😞\n\n"
+        "Не спешите оставлять плохой отзыв, мы очень дорожим нашими клиентами и нашим рейтингом! \n\n"
+        "Опишите Вашу ситуацию консультанту по ссылке ниже 👇 мы обязательно поможем решить Ваш вопрос! \n\n"
+        "✅ не забудьте приложить фотографии/видео\n\n"
         "@softsleep_online",
         reply_markup=get_restart_menu()
     )
@@ -33,7 +34,14 @@ async def select_uhod(message: Message, state: FSMContext):
 @router.message(User_Status.choosing_retail, F.text.lower() == "ассортимент")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="Не готовый текст про АССОРТИМЕНТ РОЗНИЦА",
+        text="Весь наш ассортимент вы можете увидеть, перейдя по ссылкам ниже ⬇️ \n\n"
+        "OZON 🤩✅\n"
+        "https://ozon.ru/t/KyjM0go\n\n"
+        "WILDBERRIES 🤩 🚀 \n"
+        "https://www.wildberries.ru/seller/18659\n\n"
+        "ЯНДЕКС. МАРКЕТ 🤩🔥\n"
+        "https://market.yandex.ru/business--ooo-miagkii-son/4831922\n\n"
+        "Порадуйте себя и своих близких отличным подарком 🎁",
         reply_markup=get_restart_menu()
     )
     await state.clear()

@@ -1,4 +1,5 @@
 from aiogram import Router, F
+from aiogram.enums import ParseMode
 from aiogram.types import Message, ReplyKeyboardRemove
 from handlers.status import User_Status
 from keyboards.for_questions import get_retail_or_wholesale
@@ -15,21 +16,18 @@ router = Router()  # [1]
 @router.message(Command("start"))  # [2]
 async def cmd_start(message: Message, state: FSMContext):
     user = message.from_user
-    print(user.dict())
     msg = await message.answer("Запускаем нашего бота для Вас...")
     add_user(user)
     await msg.delete()
     await message.answer(
-        "Привет!\nНа связи команда «Мягкий сон»! Мы сделали этого бота, что бы Вы смогли решать все Ваши вопросы 24/7.\n"
-        "Это очень удобно👏\n"
-        "С помощью данного бота Вы можете связаться с поддержкой!\n"
-        "Готовы начать?",
+        "Привет! На связи команда «Мягкий сон»! Мы сделали этого бота, что бы Вы смогли решать все Ваши вопросы 24/7. Это очень удобно👏\n\n"
+        "С помощью данного бота Вы можете связаться с поддержкой!",
         reply_markup=get_start_menu()
     )
     await message.delete()
 
 
-@router.message(StateFilter(None), F.text.in_(["Начать", "Вернуться в меню"]))
+@router.message(StateFilter(None), F.text.in_(["Начать", "Вернуться в меню", "Назад"]))
 async def start_select(message: Message, state: FSMContext):
     await message.answer(
 
@@ -39,11 +37,17 @@ async def start_select(message: Message, state: FSMContext):
     await state.set_state(User_Status.start)
 
 
-@router.message(User_Status.start, F.text.lower() == "опт")
+@router.message(User_Status.start, F.text.in_(["ОПТ", "Назад"]))
 async def answer_opt(message: Message, state: FSMContext):
     await message.answer(
-        "НЕ ГОТОВЫЙ ТЕКСТ ПРО ОПТ",
-        reply_markup=select_opt_option()
+        text=" <b>«Мягкий сон» - компания с историей.</b>\n\n"
+             "Сейчас это крупное предприятие, производящее тысячи единиц продукции.\n\n"
+             "✅Мы производим нашу продукцию, основываясь на богатом опыте, ориентируясь на высокие современные требования рынка.\n\n"
+             "<b>Мы очень рады, что Вы стали нашим покупателем и надеемся на долгосрочное сотрудничество 🤝🏼</b>\n\n"
+             "Выберите интересующий Вас вопрос, нажатием кнопки ⬇️",
+        reply_markup=select_opt_option(),
+        parse_mode = ParseMode.HTML
+
     )
     await state.set_state(User_Status.choosing_opt)
 
@@ -51,7 +55,13 @@ async def answer_opt(message: Message, state: FSMContext):
 @router.message(User_Status.start, F.text.lower() == "розница")
 async def answer_retail(message: Message, state: FSMContext):
     await message.answer(
-        "НЕ ГОТОВЫЙ ТЕКСТ ПРО РОЗНИЦУ",
-        reply_markup=select_retail_option()
+        text=" <b>«Мягкий сон» - компания с историей.</b>\n\n"
+             "Сейчас это крупное предприятие, производящее тысячи единиц продукции.\n\n"
+             "✅Мы производим нашу продукцию, основываясь на богатом опыте, ориентируясь на высокие современные требования рынка.\n\n"
+             "<b>Мы очень рады, что Вы стали нашим покупателем 😊 и с радостью ответим на все вопросы!</b> \n\n"
+             "Выберите интересующий Вас вопрос, нажатием кнопки ⬇️",
+        reply_markup=select_retail_option(),
+        parse_mode = ParseMode.HTML
+
     )
     await state.set_state(User_Status.choosing_retail)
