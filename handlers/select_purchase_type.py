@@ -25,19 +25,20 @@ async def cmd_start(message: Message, state: FSMContext):
         reply_markup=get_start_menu()
     )
     await message.delete()
+    await state.clear()
 
 
-@router.message(StateFilter(None), F.text.in_(["Начать", "Вернуться в меню", "Назад"]))
+@router.message(StateFilter(None), F.text.lower() == "начать")
 async def start_select(message: Message, state: FSMContext):
     await message.answer(
-
         "Выберите нужный пункт меню снизу👇",
         reply_markup=get_retail_or_wholesale()
     )
     await state.set_state(User_Status.start)
 
 
-@router.message(User_Status.start, F.text.in_(["ОПТ", "Назад"]))
+
+@router.message(User_Status.start, F.text.lower() == "опт")
 async def answer_opt(message: Message, state: FSMContext):
     await message.answer(
         text=" <b>«Мягкий сон» - компания с историей.</b>\n\n"
@@ -46,10 +47,9 @@ async def answer_opt(message: Message, state: FSMContext):
              "<b>Мы очень рады, что Вы стали нашим покупателем и надеемся на долгосрочное сотрудничество 🤝🏼</b>\n\n"
              "Выберите интересующий Вас вопрос, нажатием кнопки ⬇️",
         reply_markup=select_opt_option(),
-        parse_mode = ParseMode.HTML
-
+        parse_mode=ParseMode.HTML
     )
-    await state.set_state(User_Status.choosing_opt)
+    await state.set_state(User_Status.selected_opt)
 
 
 @router.message(User_Status.start, F.text.lower() == "розница")
@@ -61,7 +61,6 @@ async def answer_retail(message: Message, state: FSMContext):
              "<b>Мы очень рады, что Вы стали нашим покупателем 😊 и с радостью ответим на все вопросы!</b> \n\n"
              "Выберите интересующий Вас вопрос, нажатием кнопки ⬇️",
         reply_markup=select_retail_option(),
-        parse_mode = ParseMode.HTML
-
+        parse_mode=ParseMode.HTML
     )
-    await state.set_state(User_Status.choosing_retail)
+    await state.set_state(User_Status.selected_retail)
