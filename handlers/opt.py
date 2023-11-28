@@ -8,6 +8,7 @@ from aiogram.fsm.context import FSMContext
 from keyboards.for_questions import get_retail_or_wholesale
 from keyboards.restart_menu import get_restart_menu
 from keyboards.for_care import select_care
+from keyboards.help_menu import get_inline_help
 
 router = Router()  # [1]
 
@@ -24,12 +25,17 @@ async def select_uhod(message: Message, state: FSMContext):
 @router.message(User_Status.selected_opt, F.text.lower() == "брак по товару")
 async def select_uhod(message: Message, state: FSMContext):
     await message.answer(
-        text="<b>Очень жаль, что что-то пошло не так 😞</b>\n\n"
+        text="<b>Очень жаль, что что-то пошло не так 😞</b>",
+        reply_markup=get_restart_menu(),
+        parse_mode=ParseMode.HTML
+
+    )
+    await message.answer(
+        text=
              "Не спешите оставлять плохой отзыв, мы очень дорожим нашими клиентами и нашим рейтингом! \n\n"
              "Опишите Вашу ситуацию консультанту по ссылке ниже 👇 мы обязательно поможем решить Ваш вопрос! \n\n"
-             "<b>✅ не забудьте приложить фотографии/видео</b>\n\n"
-             "Написать в поддержку @softsleep_online",
-        reply_markup=get_restart_menu(),
+             "<b>✅ не забудьте приложить фотографии/видео</b>\n\n",
+        reply_markup=get_inline_help(),
         parse_mode = ParseMode.HTML
 
     )

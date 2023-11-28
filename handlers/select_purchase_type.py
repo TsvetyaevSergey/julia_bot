@@ -18,6 +18,7 @@ async def cmd_start(message: Message, state: FSMContext):
     user = message.from_user
     msg = await message.answer("Запускаем нашего бота для Вас...")
     add_user(user)
+    print(user)
     await msg.delete()
     await message.answer(
         "Привет! На связи команда «Мягкий сон»! Мы сделали этого бота, что бы Вы смогли решать все Ваши вопросы 24/7. Это очень удобно👏\n\n"
